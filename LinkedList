@@ -1,0 +1,51 @@
+//Creating a new linkedlist and inserting data.
+
+#include <iostream>
+using namespace std;
+
+typedef struct Node{
+	int data;
+	struct Node* next;
+}node;
+
+node* InsertNewNodeAtEnd(node* head, int new_data){
+	node* new_node = (node*)malloc(sizeof(node));
+	new_node->data = new_data;
+	new_node->next=NULL;
+	node* temp = head;
+	while(temp->next !=NULL){
+		temp=temp->next;
+	}
+	temp->next = new_node;
+	
+	return new_node;
+}
+
+node* InsertNewNodeAtStart(node* head, int new_data){
+
+	node* new_node = (node*)malloc(sizeof(node));
+	new_node->data = new_data;
+	new_node->next=head;
+	head = new_node;
+
+	return head;
+}
+
+void printFunc(node* current){
+	while(current!= NULL){
+		cout<<current->data<<" ";
+		current=current->next;
+	}
+}
+
+int main() {
+	node* head = (node*)malloc(sizeof(node));
+	head->data = 2;
+	head->next = NULL;
+	InsertNewNodeAtEnd(head,3);
+	InsertNewNodeAtEnd(head,4);
+	printFunc(head);
+	head=InsertNewNodeAtStart(head,5);
+	printFunc(head);
+	return 0;
+}
