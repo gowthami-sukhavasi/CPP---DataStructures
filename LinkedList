@@ -1,4 +1,4 @@
-//Creating a new linkedlist and inserting data.
+//Creating a new linkedlist and inserting data at end, inserting data at start, printing the linkedlist.
 
 #include <iostream>
 using namespace std;
