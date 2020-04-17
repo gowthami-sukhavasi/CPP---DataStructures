@@ -1,0 +1,76 @@
+//Find whether a given Linked List contains loop or cycle and if loop is present then return count of nodes in loop
+
+
+#include <iostream>
+using namespace std;
+
+typedef struct Node{
+	int data;
+	struct Node* next;
+}node;
+
+node* InsertNewNodeAtEnd(node* head, int new_data){
+	node* new_node = (node*)malloc(sizeof(node));
+	new_node->data = new_data;
+	new_node->next=NULL;
+	node* temp = head;
+	while(temp->next !=NULL){
+		temp=temp->next;
+	}
+	temp->next = new_node;
+	return new_node;
+}
+
+void countNodesInCycle(node* slow){
+	node* fast = slow;
+	int count = 1;
+	while(fast->next!=slow){
+		count++;
+		fast=fast->next;
+	}
+	cout<<"nodes: "<<count;
+}
+
+void has_cycle(node* head) {
+    node* slow = head;
+    node* fast = head;
+    int flag=0;
+   
+    while(slow!=NULL && fast!= NULL && fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast){
+         	flag=1;
+         	cout<<endl<<"slow fast"<<slow->data<<" "<<fast->data<<endl;
+         	if(flag==1)
+         	{
+         	cout<<"cycle found"<<endl;}
+         	return(countNodesInCycle(slow));
+         	break;
+        }
+    }
+	cout<<"cycle not found";
+}
+
+
+void printFunc(node* current){
+	while(current!= NULL){
+		cout<<current->data<<" ";
+		current=current->next;
+	}
+	cout<<endl;
+}
+
+int main() {
+	node* head = (node*)malloc(sizeof(node));
+	head->data = 1;
+	head->next = NULL;
+	InsertNewNodeAtEnd(head,2);
+	InsertNewNodeAtEnd(head,3);
+	InsertNewNodeAtEnd(head,4);
+	InsertNewNodeAtEnd(head,5);
+	printFunc(head);
+	head->next->next->next->next->next = head->next;
+	has_cycle(head);
+	return 0;
+}
