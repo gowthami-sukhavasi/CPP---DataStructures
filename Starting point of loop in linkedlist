@@ -1,0 +1,77 @@
+//If there is a cycle/loop in the linkedlist, find the starting point of the loop.
+
+#include <iostream>
+using namespace std;
+
+typedef struct Node{
+	int data;
+	struct Node* next;
+}node;
+
+node* InsertNewNodeAtEnd(node* head, int new_data){
+	node* new_node = (node*)malloc(sizeof(node));
+	new_node->data = new_data;
+	new_node->next=NULL;
+	node* temp = head;
+	while(temp->next !=NULL){
+		temp=temp->next;
+	}
+	temp->next = new_node;
+	return new_node;
+}
+
+void startNodeOfCycle(node* slow,node* head){
+	// leave slow pointer at the intersection node, move fast to head.
+	//move each pointer by 1 till they meet again.
+	node* fast = head;
+	while(fast->next!=slow->next){
+		fast=fast->next;
+		slow=slow->next;
+	}
+	cout<<"Start node of the cycle : "<<fast->next->data;
+}
+
+void has_cycle(node* head) {
+    node* slow = head;
+    node* fast = head;
+    int flag=0;
+   
+    while(slow!=NULL && fast!= NULL && fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast){
+         	flag=1;
+         	cout<<endl<<"meeting node "<<slow->data<<" "<<fast->data<<endl;
+         	if(flag==1)
+         	{
+         	cout<<"cycle found"<<endl;}
+         	return(startNodeOfCycle(slow,head));
+         	break;
+        }
+    }
+	cout<<"cycle not found";
+}
+
+
+void printFunc(node* current){
+	while(current!= NULL){
+		cout<<current->data<<" ";
+		current=current->next;
+	}
+	cout<<endl;
+}
+
+int main() {
+	node* head = (node*)malloc(sizeof(node));
+	head->data = 1;
+	head->next = NULL;
+	InsertNewNodeAtEnd(head,2);
+	InsertNewNodeAtEnd(head,3);
+	InsertNewNodeAtEnd(head,4);
+	InsertNewNodeAtEnd(head,5);
+	InsertNewNodeAtEnd(head,6);
+	printFunc(head);
+	head->next->next->next->next->next->next = head->next->next;
+	has_cycle(head);
+	return 0;
+}
